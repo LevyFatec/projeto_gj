@@ -22,7 +22,7 @@ const char* serverPath = "/projeto_gj/api/api_registrar_leitura.php";
 
 // --- Intervalo de Leitura (10 segundos) ---
 const long interval = 10000; // 10 segundos
-unsigned long previousMillis = 0; 
+unsigned long previousMillis = 0;
 
 //================================================
 // FUNÇÃO DE SETUP
