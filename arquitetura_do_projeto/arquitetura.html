@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arquitetura do Sistema de Medição Remota</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: flex-start;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .layer {
+            flex: 1;
+            padding: 15px;
+            background-color: #e9e9f9;
+            border-radius: 8px;
+            min-height: 400px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+        h2 {
+            text-align: center;
+            color: #1a73e8;
+            border-bottom: 3px solid #1a73e8;
+            padding-bottom: 5px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .component {
+            background-color: #fff;
+            border: 2px solid #5c6bc0;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .description {
+            font-size: 0.9em;
+            font-weight: normal;
+            margin-top: 5px;
+            color: #555;
+        }
+        .arrow-right {
+            font-size: 2em;
+            color: #5c6bc0;
+            align-self: center;
+            margin: 0 10px;
+            font-weight: 900;
+        }
+        .flow-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 style="text-align: center; color: #5c6bc0;">Sistema de Medição Climática em Granjas: Arquitetura</h1>
+
+    <div class="container">
+        
+        <div class="layer">
+            <h2>1. Coleta de Dados (IoT)</h2>
+            
+            <div class="component">
+                Sensor IoT (T°/Umidade)
+                <div class="description">Coleta as variáveis climáticas (RF-01).</div>
+            </div>
+
+            <div class="flow-line">
+                <span class="arrow-right">↓</span>
+                <div class="description" style="margin-left: 10px;">Rede LoRaWAN</div>
+            </div>
+            
+            <div class="component">
+                Gateway LoRa
+                <div class="description">Recebe o pacote LoRa e envia para a API via Wifi.</div>
+            </div>
+        </div>
+
+        <span class="arrow-right">→</span>
+
+        <div class="layer">
+            <h2>2. Backend & Processamento</h2>
+            
+            <div class="component">
+                API Server (Backend Core)
+                <div class="description">Recebe dados do Gateway e responde ao Frontend. (PHP)</div>
+            </div>
+
+            <div class="flow-line">
+                <span class="arrow-right">↕</span>
+                <div class="description" style="margin-left: 10px;">Leitura / Escrita (RNFR 02.1)</div>
+            </div>
+
+            <div class="component" style="background-color: #c8e6c9; border-color: #4caf50;">
+                Banco de Dados MySQL
+                <div class="description">Armazena dados históricos e metadados de sensores (RF-02).</div>
+            </div>
+            
+             <div class="flow-line">
+                <span class="arrow-right">↑</span>
+                <div class="description" style="margin-left: 10px;">Estatísticas (RF-04) / Tempo Real (RF-03)</div>
+            </div>
+        </div>
+
+        <span class="arrow-right">→</span>
+
+        <div class="layer">
+            <h2>3. Visualização (Frontend)</h2>
+            
+            <div class="component">
+                Interface Web / Dashboard
+                <div class="description">Acessada por Wi-Fi Local ou Internet (Deploy).</div>
+            </div>
+
+            <div class="flow-line">
+                <span class="arrow-right">↓</span>
+                <div class="description" style="margin-left: 10px;">Exibe Dados em Tempo Real (RNFR 03.1)</div>
+            </div>
+
+            <div class="component">
+                Componente de Gráfico
+                <div class="description">Gera gráficos de linha interativos (RF-05 / RNFR 05.1).</div>
+            </div>
+
+            <div class="flow-line">
+                <span class="arrow-right">↓</span>
+                <div class="description" style="margin-left: 10px;">Seleção de Período (RF-06)</div>
+            </div>
+
+            <div class="component">
+                Tela de Estatísticas
+                <div class="description">Exibe Mínima, Máxima e Média (RF-04).</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
